@@ -3,6 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      target: development
     command: uv run manage.py runserver 0.0.0.0:8000
     ports:
       - 8000:8000
@@ -18,6 +19,9 @@ services:
       - .env
     environment:
       - DATABASE_HOST=database
+      - CELERY_BROKER_URL=redis://cache:6379/0
+      - CELERY_RESULT_BACKEND=redis://cache:6379/0
+      - AWS_S3_ENDPOINT_URL=http://storage:9000
     restart: on-failure
   database:
     image: postgres:18-alpine3.22
@@ -28,3 +32,41 @@ services:
     ports:
       - 5432:5432
     restart: on-failure
+  cache:
+    image: redis:8.0-alpine3.21
+    ports:
+      - 6379:6379
+    command: redis-server
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: worker
+    command: uv run celery -A laboratoriodolyc worker --loglevel=info
+    develop:
+      watch:
+        - action: sync+restart
+          path: ./
+          target: /app
+        - action: sync+restart
+          path: uv.lock
+          target: /app/uv.lock
+    env_file:
+      - .env
+    environment:
+      - DATABASE_HOST=database
+      - CELERY_BROKER_URL=redis://cache:6379/0
+      - CELERY_RESULT_BACKEND=redis://cache:6379/0
+      - AWS_S3_ENDPOINT_URL=http://storage:9000
+      - AWS_S3_CUSTOM_DOMAIN=storage:9000/laboratorio-do-lyc
+    restart: on-failure
+  storage:
+    image: minio/minio:RELEASE.2025-09-07T16-13-09Z
+    ports:
+      - 9000:9000
+      - 9001:9001
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    command: server /data --console-address ":9001"
+    restart: unless-stopped

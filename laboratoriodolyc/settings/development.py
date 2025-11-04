@@ -1,3 +1,9 @@
 from .base import *
 
 DEBUG = True
+
+AWS_S3_ENDPOINT_URL = getenv("AWS_S3_ENDPOINT_URL")
+AWS_S3_URL_PROTOCOL = "http:"
+AWS_S3_CUSTOM_DOMAIN = getenv(
+    "AWS_S3_CUSTOM_DOMAIN", f"localhost:9000/{AWS_STORAGE_BUCKET_NAME}"
+)
