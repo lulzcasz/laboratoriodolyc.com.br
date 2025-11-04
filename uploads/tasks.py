@@ -28,6 +28,7 @@ def process_video(self, video_name):
             cmd = [
                 'ffmpeg',
                 '-i', input_path,
+                '-vf', 'scale=1280:720:force_original_aspect_ratio=decrease',
                 '-c:v', 'libvpx-vp9',
                 '-crf', '30',
                 '-b:v', '0',
