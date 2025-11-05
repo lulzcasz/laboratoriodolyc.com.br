@@ -1,5 +1,5 @@
 from django.contrib import admin
-from uploads.models import Video
+from uploads.models import Video, Image
 from django.utils.html import format_html
 
 
@@ -18,3 +18,20 @@ class VideoAdmin(admin.ModelAdmin):
         )
 
     processed_video_link.short_description = 'Processed Video URL'
+
+
+@admin.register(Image)
+class ImageAdmin(admin.ModelAdmin):
+    fields = ('uuid', 'image', 'processed_image_link')
+    readonly_fields = ('uuid', 'processed_image_link')
+
+    def processed_image_link(self, obj):
+        processed_url = obj.get_processed_image_url()
+        
+        return format_html(
+            '<a href="{url}" target="_blank">{display_text}</a>', 
+            url=processed_url,
+            display_text=processed_url.replace('/media/', '.../')
+        )
+
+    processed_image_link.short_description = 'Processed Image URL'

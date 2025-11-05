@@ -1,4 +1,4 @@
-from django.db.models import Model, FileField, UUIDField
+from django.db.models import Model, FileField, UUIDField, ImageField
 from uuid import uuid4
 from os.path import join
 
@@ -7,6 +7,12 @@ def get_video_upload_path(instance, filename):
     ext = filename.split('.')[-1].lower()
 
     return join(f'videos/{instance.uuid}', f'raw.{ext}')
+
+
+def get_image_upload_path(instance, filename):
+    ext = filename.split('.')[-1].lower()
+
+    return join(f'images/{instance.uuid}', f'raw.{ext}')
 
 
 class Video(Model):
@@ -18,3 +24,16 @@ class Video(Model):
     
     def get_processed_video_url(self):
         return self.video.url.replace("raw.mp4", "processed.webm")
+    
+
+class Image(Model):
+    uuid = UUIDField(default=uuid4, editable=False, unique=True, db_index=True)
+    image = ImageField("imagem", upload_to=get_image_upload_path)
+
+    def __str__(self):
+        return str(self.uuid)
+    
+    def get_processed_image_url(self):
+        base_path, old_filename = self.image.url.rsplit('/', 1)
+
+        return f"{base_path}/processed.webp"
