@@ -30,7 +30,7 @@ def process_video(self, video_name):
             cmd = [
                 'ffmpeg',
                 '-i', input_path,
-                '-vf', 'scale=1280:720:force_original_aspect_ratio=decrease',
+                '-vf', 'scale=1024:576:force_original_aspect_ratio=decrease',
                 '-c:v', 'libvpx-vp9',
                 '-crf', '30',
                 '-b:v', '0',
@@ -73,7 +73,7 @@ def delete_videos(self, video_name):
 
 
 @shared_task(bind=True)
-def process_image(self, image_name, max_size=(1280, 720), quality=85):
+def process_image(self, image_name, max_size=(1024, 576), quality=85):
     logger.info(f"Starting image processing for: {image_name}")
 
     output_name_s3 = image_name.replace("raw.png", "processed.webp")
