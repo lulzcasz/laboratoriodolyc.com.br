@@ -26,7 +26,7 @@ services:
   database:
     image: postgres:18-alpine3.22
     environment:
-      POSTGRES_DB: laboratoriodolyc
+      POSTGRES_DB: laboratorio_do_lyc
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
