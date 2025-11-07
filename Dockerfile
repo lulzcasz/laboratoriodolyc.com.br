@@ -40,4 +40,4 @@ RUN apt update \
 
 RUN uv sync --no-dev
 
-CMD ["uv", "run", "celery", "-A", "laboratoriodolyc", "worker"]
+CMD ["uv", "run", "celery", "-A", "laboratoriodolyc", "worker", "--loglevel=info"]

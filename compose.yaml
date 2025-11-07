@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: production
+      target: web_development
     command: uv run manage.py runserver 0.0.0.0:8000
     ports:
       - 8000:8000
@@ -41,8 +41,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: worker
-    command: uv run celery -A laboratoriodolyc worker --loglevel=info
+      target: worker_development
+    command: uv run celery -A laboratoriodolyc worker --loglevel=DEBUG
     develop:
       watch:
         - action: sync+restart
