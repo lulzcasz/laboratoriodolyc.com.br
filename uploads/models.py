@@ -5,7 +5,7 @@ from django.db.models import (
     ForeignKey,
     CASCADE,
     DateTimeField,
-    DO_NOTHING,
+    SET_NULL,
     BooleanField,
     TextChoices,
     CharField,
@@ -23,7 +23,6 @@ def upload_post_image_to_path(instance, filename):
 class AbstractMedia(Model):
     uuid = UUIDField(default=uuid4, editable=False, unique=True, db_index=True)
     post = ForeignKey('posts.Post', CASCADE)
-    uploaded_by = ForeignKey(User, DO_NOTHING, verbose_name="autor")
     uploaded_at = DateTimeField(auto_now_add=True)
     processed = BooleanField("processado")
 
@@ -42,7 +41,7 @@ class Image(AbstractMedia):
     image = ImageField("imagem", upload_to=upload_post_image_to_path)
     post = ForeignKey('posts.Post', CASCADE, related_name='cover_images')
     uploaded_by = ForeignKey(
-        User, DO_NOTHING, related_name='images', verbose_name="enviado por"
+        User, set, related_name='images', verbose_name="enviado por", null=True
     )
     kind = CharField("tipo", max_length=20, choices=Kind.choices)
     
@@ -60,7 +59,7 @@ class Video(AbstractMedia):
     video = FileField(upload_to=upload_post_video_to_path)
     post = ForeignKey('posts.Post', CASCADE, related_name='content_videos')
     uploaded_by = ForeignKey(
-        User, DO_NOTHING, related_name='videos', verbose_name="enviado por"
+        User, SET_NULL, related_name='videos', verbose_name="enviado por", null=True
     )
 
     class Meta:
