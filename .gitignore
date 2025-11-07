@@ -2,7 +2,5 @@
 .uploads/
 __pycache__/
 
-bootstrap.min.css
-bootstrap.bundle.min.js
-prism-coy.min.css
-prism.min.js
+*.min.css
+*.min.js

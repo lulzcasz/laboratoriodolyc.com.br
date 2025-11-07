@@ -36,4 +36,10 @@ get-bootstrap:
 
 get-prism:
     @curl --create-dirs -o laboratoriodolyc/static/js/prism.min.js https://cdn.jsdelivr.net/npm/prismjs@1.30/prism.min.js
-    @curl --create-dirs -o laboratoriodolyc/static/css/prism-coy.min.css https://cdn.jsdelivr.net/npm/prismjs@1.30/themes/prism-coy.min.css
+    @curl --create-dirs -o laboratoriodolyc/static/css/prism-coy-without-shadows.min.css https://cdn.jsdelivr.net/npm/prism-themes@1.9/themes/prism-coy-without-shadows.min.css
+    @curl --create-dirs -o laboratoriodolyc/static/js/prism-autoloader.min.js https://cdn.jsdelivr.net/npm/prismjs@1.30/plugins/autoloader/prism-autoloader.min.js
+    @curl --create-dirs -o laboratoriodolyc/static/js/prism-copy-to-clipboard.min.js https://cdn.jsdelivr.net/npm/prismjs@1.30/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js
+    @curl --create-dirs -o laboratoriodolyc/static/js/prism-toolbar.min.js https://cdn.jsdelivr.net/npm/prismjs@1.30/plugins/toolbar/prism-toolbar.min.js
+    @curl --create-dirs -o laboratoriodolyc/static/css/prism-toolbar.min.css https://cdn.jsdelivr.net/npm/prismjs@1.30/plugins/toolbar/prism-toolbar.min.css
+    @curl --create-dirs -o laboratoriodolyc/static/css/prism-treeview.min.css https://cdn.jsdelivr.net/npm/prismjs@1.30.0/plugins/treeview/prism-treeview.min.css
+    @curl --create-dirs -o laboratoriodolyc/static/js/prism-treeview.min.js https://cdn.jsdelivr.net/npm/prismjs@1.30.0/plugins/treeview/prism-treeview.min.js
