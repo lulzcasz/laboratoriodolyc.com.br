@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: development
+      target: production
     command: uv run manage.py runserver 0.0.0.0:8000
     ports:
       - 8000:8000
