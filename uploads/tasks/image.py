@@ -7,23 +7,29 @@ from PIL import Image as PILImage
 
 @shared_task(bind=True)
 def process_image(self, image_id):
-    post_content_image = Image.objects.get(id=image_id)
-    print(post_content_image.image.name)
+    image = Image.objects.get(id=image_id)
+    print(image.image.name)
 
-    with post_content_image.image.open('rb') as old:
+    with image.image.open('rb') as old:
         new = BytesIO()
 
         with PILImage.open(old) as img:
             img_rgba = img.convert('RGBA')
-            img_rgba.thumbnail((1024, 576), PILImage.Resampling.LANCZOS)
+
+            if image.kind == Image.Kind.POST_COVER:
+                img_rgba = img_rgba.resize((1024, 576), PILImage.Resampling.LANCZOS)
+
+            else:
+                img_rgba.thumbnail((1024, 576), PILImage.Resampling.LANCZOS)
+                
             img_rgba.save(new, "WEBP", quality=85, method=6)
 
             new.seek(0)
 
-        post_content_image.image.save(post_content_image.image.name, new)
+        image.image.save(image.image.name, new)
 
-    post_content_image.processed = True
-    post_content_image.save()
+    image.processed = True
+    image.save()
 
 
 @shared_task(bind=True)
