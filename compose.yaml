@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: development
+      target: web_development
     command: uv run manage.py runserver 0.0.0.0:8000
     ports:
       - 8000:8000
@@ -26,7 +26,7 @@ services:
   database:
     image: postgres:18-alpine3.22
     environment:
-      POSTGRES_DB: laboratoriodolyc
+      POSTGRES_DB: laboratorio_do_lyc
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
@@ -41,8 +41,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: worker
-    command: uv run celery -A laboratoriodolyc worker --loglevel=info
+      target: worker_development
+    command: uv run celery -A laboratoriodolyc worker --loglevel=DEBUG
     develop:
       watch:
         - action: sync+restart
