@@ -13,6 +13,7 @@ from django.utils.text import slugify
 from tinymce.models import HTMLField
 from django.contrib.auth.models import User
 from uuid import uuid4
+from django.urls import reverse
 
 
 class Post(Model):
@@ -44,3 +45,7 @@ class Post(Model):
     
     class Meta:
         ordering = ['-created_at']
+
+
+    def get_absolute_url(self):
+        return reverse('post-detail', kwargs={'post_slug': self.slug})
