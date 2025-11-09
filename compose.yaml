@@ -42,7 +42,7 @@ services:
       context: .
       dockerfile: Dockerfile
       target: worker_development
-    command: uv run celery -A laboratoriodolyc worker --loglevel=DEBUG
+    command: uv run celery -A laboratoriodolyc worker --loglevel=INFO
     develop:
       watch:
         - action: sync+restart
