@@ -28,7 +28,7 @@ def process_video(self, video_id):
             '-crf', '30',
             '-b:v', '0',
             '-c:a', 'libopus',
-            '-b:a', '128k',
+            '-b:a', '64k',
             '-r', '30',
             '-y',
             temp_output_path
