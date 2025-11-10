@@ -16,10 +16,6 @@ from django.contrib.auth.models import User
 from os.path import join
 
 
-def upload_post_image_to_path(instance, filename):
-    return join(f'posts/{instance.post.uuid}/images', f'{instance.uuid}.avif')
-
-
 class AbstractMedia(Model):
     uuid = UUIDField(default=uuid4, editable=False, unique=True, db_index=True)
     post = ForeignKey('posts.Post', CASCADE)
@@ -31,7 +27,11 @@ class AbstractMedia(Model):
 
     def __str__(self):
         return str(self.uuid)
-    
+
+
+def upload_post_image_to_path(instance, filename):
+    return join(f'posts/{instance.post.uuid}/images', f'{instance.uuid}.avif')
+
 
 class Image(AbstractMedia):
     class Kind(TextChoices):

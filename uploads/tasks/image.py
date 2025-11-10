@@ -1,12 +1,10 @@
 from celery import shared_task
 from uploads.models import Image
 from django.core.files.storage import default_storage
-from io import BytesIO
 from PIL import Image as PILImage
 import tempfile
 import subprocess
 from django.core.files.base import ContentFile
-import os
 
 
 @shared_task(bind=True)
@@ -16,27 +14,27 @@ def process_image(self, image_id):
     with tempfile.NamedTemporaryFile(suffix='.avif', delete=True) as temp_output:
         with image.image.open('rb') as old:
             if image.kind == Image.Kind.POST_COVER:
-                subprocess.run(
-                    [
-                        'ffmpeg',
-                        '-y',
-                        '-i',
-                        old.url,
-                        '-vf',
-                        "scale=1024:576, scale='trunc(iw/2)*2':'trunc(ih/2)*2'",
-                        '-c:v',
-                        'libaom-av1',
-                        '-still-picture',
-                        '1',
-                        '-crf',
-                        '30',
-                        temp_output.name,
-                    ]
-                )
+                subprocess.run([
+                    'ffmpeg',
+                    '-y',
+                    '-i',
+                    old.url,
+                    '-vf',
+                    "scale=1024:576",
+                    '-pix_fmt',
+                    'yuva420p',
+                    '-c:v',
+                    'libaom-av1',
+                    '-still-picture',
+                    '1',
+                    '-crf',
+                    '15',
+                    temp_output.name,
+                ])
 
             else:
                 with PILImage.open(old) as img:
-                    if img.is_animated:
+                    if getattr(img, 'is_animated', False):
                         subprocess.run([
                             'ffmpeg',
                             '-y',
@@ -44,12 +42,17 @@ def process_image(self, image_id):
                             old.url,
                             '-c:v',
                             'libsvtav1',
+                            '-crf',
+                            '38',
                             '-r',
                             '15',
+                            '-preset',
+                            '2',
                             '-vf',
                             "scale='min(1024,iw)':576:force_original_aspect_ratio=decrease",
                             temp_output.name,
                         ])
+                        
                     else:
                         subprocess.run([
                             'ffmpeg',
@@ -57,13 +60,15 @@ def process_image(self, image_id):
                             '-i',
                             old.url,
                             '-vf',
-                            "scale='min(1024,iw)':'min(576,ih)':force_original_aspect_ratio=increase, scale='min(1024,iw)':'min(576,ih)', scale='trunc(iw/2)*2':'trunc(ih/2)*2'",
+                            "scale='min(1024,iw)':'min(576,ih)':force_original_aspect_ratio=decrease, scale='min(1024,iw)':'min(576,ih)', scale='trunc(iw/2)*2':'trunc(ih/2)*2'",
+                            '-pix_fmt',
+                            'yuva420p',
                             '-c:v',
                             'libaom-av1',
                             '-still-picture',
                             '1',
                             '-crf',
-                            '30',
+                            '15',
                             temp_output.name,
                         ])
 
