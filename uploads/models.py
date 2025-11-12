@@ -5,14 +5,12 @@ from django.db.models import (
     ForeignKey,
     CASCADE,
     DateTimeField,
-    SET_NULL,
     BooleanField,
     TextChoices,
     CharField,
     ImageField,
 )
 from uuid import uuid4
-from django.contrib.auth.models import User
 from os.path import join
 
 
@@ -57,4 +55,4 @@ class Video(AbstractMedia):
     post = ForeignKey('posts.Post', CASCADE, related_name='content_videos')
 
     class Meta:
-        verbose_name = "Vídeo"
+        verbose_name = "vídeo"

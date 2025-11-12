@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from posts.models import Post, Tag
+from posts.models import Category, Post
 from django.core.paginator import Paginator
 
 
@@ -32,24 +32,24 @@ logger = getLogger(__name__)
 def post_detail(request, post_slug):
     post = get_object_or_404(Post, slug=post_slug, status=Post.Status.PUBLISHED)
 
-    tags = [] 
+    categories = [] 
     created_nodes = {} 
 
-    for tag in post.tags.all(): 
-        tag_hierarchy = list(tag.get_ancestors()) + [tag] 
+    for category in post.categories.all(): 
+        category_hierarchy = list(category.get_ancestors()) + [category] 
 
-        current_parent_list = tags
+        current_parent_list = categories
 
-        for t in tag_hierarchy:
-            unique_key = t.full_path 
+        for c in category_hierarchy:
+            unique_key = c.full_path 
 
             if unique_key in created_nodes:
                 node = created_nodes[unique_key]
                 
             else:
                 node = {
-                    'name': t.name,
-                    'full_path': t.full_path,
+                    'name': c.name,
+                    'full_path': c.full_path,
                     'children': []
                 }
 
@@ -61,22 +61,22 @@ def post_detail(request, post_slug):
 
     ctx = {
         'post': post,
-        'tags': tags,
+        'categories': categories,
     }
 
     return render(request, 'blog/post_detail.html', ctx)
 
 
-def posts_by_category(request, category_slug):
-    return render(request, 'blog/posts_by_category.html', {'posts': 'Post.objects.all(category_slug = category_slug)'})
+def posts_by_section(request, section_slug):
+    return render(request, 'blog/posts_by_section.html', {'posts': 'Post.objects.all(section_slug = section_slug)'})
 
 
-def posts_by_tag(request, tag_full_path):
+def posts_by_category(request, category_full_path):
     from logging import getLogger
     logger = getLogger(__name__)
 
-    logger.warning(tag_full_path)
+    logger.warning(category_full_path)
 
-    posts = Tag.objects.get(full_path=tag_full_path).posts
+    posts = Category.objects.get(full_path=category_full_path).posts
 
-    return render(request, 'blog/posts_by_tag.html', {'posts': posts})
+    return render(request, 'blog/posts_by_category.html', {'posts': posts})

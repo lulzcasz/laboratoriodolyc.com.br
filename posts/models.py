@@ -16,9 +16,10 @@ from uuid import uuid4
 from django.urls import reverse
 from treebeard.mp_tree import MP_Node
 from django.db import transaction
+from django.utils import timezone
 
 
-class Category(Model):
+class Section(Model):
     name = CharField('nome', unique=True, max_length=32)
     slug = SlugField(unique=True, max_length=32, blank=True)
     created_at = DateTimeField("criado em", auto_now_add=True)
@@ -34,10 +35,10 @@ class Category(Model):
         super().save(*args, **kwargs)
 
     class Meta:
-        verbose_name = "Categoria"
+        verbose_name = "tipo"
 
 
-class Tag(MP_Node):
+class Category(MP_Node):
     name = CharField('nome', max_length=32)
     slug = SlugField(max_length=32, blank=True)
     created_at = DateTimeField("criado em", auto_now_add=True)
@@ -68,6 +69,9 @@ class Tag(MP_Node):
 
     def __str__(self):
         return self.name
+    
+    class Meta:
+        verbose_name = 'categoria'
 
 
 class Post(Model):
@@ -83,22 +87,26 @@ class Post(Model):
     content = HTMLField("conteúdo", blank=True)
     created_at = DateTimeField("criado em", auto_now_add=True)
     updated_at = DateTimeField("atualizado em", auto_now=True)
+    published_at = DateTimeField("publicado em", null=True, editable=False)
     status = CharField(max_length=16, choices=Status.choices, default=Status.DRAFT)
-    category = ForeignKey(
-        Category,
+    section = ForeignKey(
+        Section,
         SET_NULL,
-        verbose_name="categoria",
+        verbose_name="seção",
         null=True,
         blank=True,
         related_name='posts',
     )
-    tags = ManyToManyField(
-        Tag, verbose_name="tags", related_name='posts', blank=True,
+    categories = ManyToManyField(
+        Category, verbose_name="categorias", related_name='posts', blank=True,
     )
 
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.title)
+
+        if self.status == self.Status.PUBLISHED and not self.published_at:
+            self.published_at = timezone.now()
 
         return super().save(*args, **kwargs)
     
@@ -107,7 +115,6 @@ class Post(Model):
     
     class Meta:
         ordering = ['-created_at']
-
 
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'post_slug': self.slug})
