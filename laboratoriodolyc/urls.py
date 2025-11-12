@@ -4,10 +4,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
 from django.contrib.sitemaps.views import sitemap
-from posts.sitemaps import PostSitemap
+from posts.sitemaps import SectionSitemap, CategorySitemap, PostSitemap
 
 
 sitemaps_dict = {
+    'sections': SectionSitemap,
+    'categories': CategorySitemap,
     'posts': PostSitemap,
 }
 

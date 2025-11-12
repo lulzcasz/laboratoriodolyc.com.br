@@ -35,7 +35,11 @@ class Section(Model):
         super().save(*args, **kwargs)
 
     class Meta:
-        verbose_name = "tipo"
+        verbose_name = "seção"
+        verbose_name_plural = "seções"
+
+    def get_absolute_url(self):
+        return reverse('posts-by-section', kwargs={'section_slug': self.slug})
 
 
 class Category(MP_Node):
@@ -72,6 +76,9 @@ class Category(MP_Node):
     
     class Meta:
         verbose_name = 'categoria'
+
+    def get_absolute_url(self):
+        return reverse('posts-by-category', kwargs={'category_full_path': self.full_path})
 
 
 class Post(Model):
