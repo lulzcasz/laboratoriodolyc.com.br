@@ -1,0 +1,34 @@
+<nav class="navbar navbar-expand-lg bg-body-secondary">
+  <div class="container-fluid">
+    <a class="navbar-brand" style="margin-bottom: 0.18rem;" href="/">Laboratório do Lyc</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        {% for section in sections %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'posts-by-section' section_slug=section.slug %}">{{ section.name }}</a>
+          </li>
+        {% endfor %}
+        {% for category in categories %}
+          {% if category.children %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_{{ category.id }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ category.data.name }}
+              </a>
+              
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown_{{ category.id }}">                
+                {% include "blog/includes/_nested_dropdown.html" with parent=category childrens=category.children %}              
+              </ul>
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'posts-by-category' category_full_path=category.data.full_path %}">{{ category.data.name }}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,24 @@
+<li>
+    <a class="dropdown-item" href="{% url 'posts-by-category' category_full_path=parent.data.full_path %}"> <strong>Tudo em {{ parent.data.name }}</strong></a>
+</li>
+        
+<li><hr class="dropdown-divider"></li>
+
+{% for children in childrens %}
+    {% if children.children %}
+        <li>
+            <a class="dropdown-item has-submenu dropdown-toggle" href="/categorias/{{ children.data.full_path }}/">
+                {{ children.data.name }}
+            </a>
+            <ul class="dropdown-menu dropdown-submenu">
+                {% include "blog/includes/_nested_dropdown.html" with parent=children childrens=children.children %}
+            </ul>
+        </li>
+    {% else %}
+        <li>
+            <a class="dropdown-item" href="/categorias/{{ children.data.full_path }}/">
+                {{ children.data.name }}
+            </a>
+        </li>
+    {% endif %}
+{% endfor %}
