@@ -17,10 +17,14 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
     'tinymce',
     'treebeard',
+    'django_celery_results',
     'uploads',
     'posts',
     'blog',
 ]
+
+CELERY_RESULT_EXTENDED = True
+CELERY_RESULT_BACKEND = 'django-db'
 
 TINYMCE_DEFAULT_CONFIG = {
     "height": "800px",
@@ -112,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'pt-br'
+LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'America/Santarem'
 
@@ -128,7 +132,6 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CELERY_BROKER_URL = getenv("CELERY_BROKER_URL")
-CELERY_RESULT_BACKEND = getenv("CELERY_RESULT_BACKEND")
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'

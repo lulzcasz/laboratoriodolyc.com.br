@@ -20,7 +20,6 @@ services:
     environment:
       - DATABASE_HOST=database
       - CELERY_BROKER_URL=redis://cache:6379/0
-      - CELERY_RESULT_BACKEND=redis://cache:6379/0
       - AWS_S3_ENDPOINT_URL=http://storage:9000
     restart: on-failure
   database:
@@ -42,7 +41,7 @@ services:
       context: .
       dockerfile: Dockerfile
       target: worker_development
-    command: uv run celery -A laboratoriodolyc worker --loglevel=INFO
+    command: uv run celery -A laboratoriodolyc worker --loglevel=INFO --concurrency=2
     develop:
       watch:
         - action: sync+restart
@@ -56,7 +55,6 @@ services:
     environment:
       - DATABASE_HOST=database
       - CELERY_BROKER_URL=redis://cache:6379/0
-      - CELERY_RESULT_BACKEND=redis://cache:6379/0
       - AWS_S3_ENDPOINT_URL=http://storage:9000
       - AWS_S3_CUSTOM_DOMAIN=storage:9000/laboratorio-do-lyc
     restart: on-failure

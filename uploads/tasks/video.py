@@ -44,6 +44,13 @@ def process_video(self, video_id):
 
         os.remove(temp_output_path)
 
+    return {
+        'status': 'success',
+        'video_id': video_id,
+        'new_path': video.processed.name,
+        'message': f'Video {video_id} processed successfully to VP9 format.'
+    }
+
 @shared_task(bind=True)
 def delete_video(self, source, processed):
     default_storage.delete(source)
