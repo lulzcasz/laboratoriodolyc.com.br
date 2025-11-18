@@ -36,7 +36,7 @@ class Image(AbstractMedia):
         POST_COVER = "post_cover"
         POST_CONTENT_IMAGE = "post_content_image"
 
-    source = ImageField("fonte", upload_to=post_image_source_path, max_length=128)
+    source = ImageField(upload_to=post_image_source_path, max_length=128)
     processed = ImageField(
         upload_to=post_image_processed_path, max_length=128, blank=True,
     )
