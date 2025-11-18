@@ -20,10 +20,10 @@ from django.utils import timezone
 
 
 class Section(Model):
-    name = CharField('nome', unique=True, max_length=32)
+    name = CharField(unique=True, max_length=32)
     slug = SlugField(unique=True, max_length=32, blank=True)
-    created_at = DateTimeField("criado em", auto_now_add=True)
-    updated_at = DateTimeField("atualizado em", auto_now=True)
+    created_at = DateTimeField(auto_now_add=True)
+    updated_at = DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.name
@@ -34,20 +34,16 @@ class Section(Model):
 
         super().save(*args, **kwargs)
 
-    class Meta:
-        verbose_name = "seção"
-        verbose_name_plural = "seções"
-
     def get_absolute_url(self):
         return reverse('posts-by-section', kwargs={'section_slug': self.slug})
 
 
 class Category(MP_Node):
-    name = CharField('nome', max_length=32)
+    name = CharField(max_length=32)
     slug = SlugField(max_length=32, blank=True)
-    created_at = DateTimeField("criado em", auto_now_add=True)
-    updated_at = DateTimeField("atualizado em", auto_now=True)
-    full_path = CharField("caminho completo", max_length=128, unique=True, blank=True)
+    created_at = DateTimeField(auto_now_add=True)
+    updated_at = DateTimeField(auto_now=True)
+    full_path = CharField(max_length=128, unique=True, blank=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -75,7 +71,7 @@ class Category(MP_Node):
         return self.name
     
     class Meta:
-        verbose_name = 'categoria'
+        verbose_name_plural = 'categories'
 
     def get_absolute_url(self):
         return reverse('posts-by-category', kwargs={'category_full_path': self.full_path})
@@ -83,30 +79,21 @@ class Category(MP_Node):
 
 class Post(Model):
     class Status(TextChoices):
-        DRAFT = 'rascunho', 'Rascunho'
-        PUBLISHED = 'publicado', 'Publicado'
+        DRAFT = 'draft'
+        PUBLISHED = 'published'
         
     uuid = UUIDField(default=uuid4, editable=False, unique=True, db_index=True)
-    title = CharField("título", max_length=60, unique=True)
+    title = CharField(max_length=60, unique=True)
     slug = SlugField(max_length=60, unique=True, blank=True)
-    description = CharField("descrição", max_length=160, blank=True)
+    description = CharField(max_length=160, blank=True)
     cover = URLField("capa", blank=True)
-    content = HTMLField("conteúdo", blank=True)
-    created_at = DateTimeField("criado em", auto_now_add=True)
-    updated_at = DateTimeField("atualizado em", auto_now=True)
-    published_at = DateTimeField("publicado em", null=True, editable=False)
-    status = CharField(max_length=16, choices=Status.choices, default=Status.DRAFT)
-    section = ForeignKey(
-        Section,
-        SET_NULL,
-        verbose_name="seção",
-        null=True,
-        blank=True,
-        related_name='posts',
-    )
-    categories = ManyToManyField(
-        Category, verbose_name="categorias", related_name='posts', blank=True,
-    )
+    content = HTMLField(blank=True)
+    created_at = DateTimeField(auto_now_add=True)
+    updated_at = DateTimeField(auto_now=True)
+    published_at = DateTimeField(null=True, editable=False)
+    status = CharField(max_length=10, choices=Status.choices, default=Status.DRAFT)
+    section = ForeignKey(Section, SET_NULL, null=True, blank=True, related_name='posts')
+    categories = ManyToManyField(Category, related_name='posts', blank=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:

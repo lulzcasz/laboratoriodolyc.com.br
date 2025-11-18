@@ -30,6 +30,7 @@ CELERY_TASK_TRACK_STARTED = True
 TINYMCE_DEFAULT_CONFIG = {
     "height": "800px",
     "width": "100%",
+    'language': 'pt_BR',
     "menubar": False,
     "plugins": "image codesample directionality fullscreen link lists advlist media preview table code",
     "toolbar": "undo redo | blocks fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | pagebreak anchor codesample ltr rtl",

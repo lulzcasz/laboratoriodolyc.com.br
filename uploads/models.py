@@ -33,33 +33,20 @@ class AbstractMedia(Model):
 
 class Image(AbstractMedia):
     class Kind(TextChoices):
-        POST_COVER = "post_cover", "Capa do Post"
-        POST_CONTENT_IMAGE = "post_content_image", "Imagem do Conteúdo do Post"
+        POST_COVER = "post_cover"
+        POST_CONTENT_IMAGE = "post_content_image"
 
     source = ImageField("fonte", upload_to=post_image_source_path, max_length=128)
     processed = ImageField(
-        "processada",
-        upload_to=post_image_processed_path,
-        max_length=128,
-        blank=True,
+        upload_to=post_image_processed_path, max_length=128, blank=True,
     )
     post = ForeignKey("posts.Post", CASCADE, related_name="cover_images")
-    kind = CharField("tipo", max_length=20, choices=Kind.choices)
-
-    class Meta:
-        verbose_name = "imagem"
-        verbose_name_plural = "imagens"
+    kind = CharField(max_length=20, choices=Kind.choices)
 
 
 class Video(AbstractMedia):
-    source = FileField("fonte", upload_to=post_video_source_path, max_length=128)
+    source = FileField(upload_to=post_video_source_path, max_length=128)
     processed = FileField(
-        "processado",
-        upload_to=post_video_processed_path,
-        max_length=128,
-        blank=True,
+        upload_to=post_video_processed_path, max_length=128, blank=True,
     )
     post = ForeignKey("posts.Post", CASCADE, related_name="content_videos")
-
-    class Meta:
-        verbose_name = "vídeo"

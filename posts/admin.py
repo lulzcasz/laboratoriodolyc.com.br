@@ -4,6 +4,8 @@ from django.contrib import admin
 from posts.models import Section, Category, Post
 from treebeard.admin import TreeAdmin
 from treebeard.forms import movenodeform_factory
+from tinymce.widgets import AdminTinyMCE
+from django import forms
 
 
 admin.site.register(Section, admin.ModelAdmin)
@@ -16,8 +18,23 @@ class CategoryAdmin(TreeAdmin):
     form = movenodeform_factory(Category)
 
 
+from tinymce.widgets import TinyMCE
+
+class MyModelAdminForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = '__all__'
+        widgets = {
+            'content': TinyMCE(  # Replace with your field's name
+                mce_attrs={'language': 'en_US'}
+            ),
+        }
+
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
+
+    form = MyModelAdminForm
+
     list_display = [
         'title',
         'created_at',
