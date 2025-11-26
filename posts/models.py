@@ -83,7 +83,7 @@ class Post(Model):
         
     uuid = UUIDField(default=uuid4, editable=False, unique=True, db_index=True)
     title = CharField(max_length=60, unique=True)
-    slug = SlugField(max_length=60, blank=True)
+    slug = SlugField(max_length=60, unique=True, blank=True)
     description = CharField(max_length=160, blank=True)
     cover = URLField(blank=True)
     content = HTMLField(blank=True)
