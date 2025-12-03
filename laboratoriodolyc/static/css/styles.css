@@ -1,4 +1,6 @@
-
+img {
+    max-width: 100%; 
+}
 
 pre.diff-highlight > code .token.deleted:not(.prefix),
 pre > code.diff-highlight .token.deleted:not(.prefix) {

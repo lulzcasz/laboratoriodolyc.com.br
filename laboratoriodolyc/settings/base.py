@@ -30,9 +30,11 @@ TINYMCE_DEFAULT_CONFIG = {
     "plugins": "image codesample directionality fullscreen link lists advlist media preview table code",
     "toolbar": "undo redo | blocks fontsize | bold italic underline strikethrough | align numlist bullist | link image | table media | lineheight outdent indent| forecolor backcolor removeformat | charmap emoticons | code fullscreen preview | pagebreak anchor codesample ltr rtl",
     "toolbar_mode": "wrap",
-    'content_css': 'dark',
+    'content_css': ['dark', '/static/posts/css/tinymce-content.css'],
     'skin': 'oxide-dark',
     'license_key': 'gpl',
+    "images_upload_handler": "upload_image",
+    'image_dimensions': False,
     "codesample_languages": [
         {"text": "Arduino", "value": "arduino"},
         {"text": "ARM Assembly", "value": "armasm"},
@@ -55,6 +57,12 @@ TINYMCE_DEFAULT_CONFIG = {
         {"text": "TOML", "value": "toml"},
         {"text": "YAML", "value": "yaml"},
         {"text": "Treeview", "value": "treeview"},
+    ],
+}
+
+TINYMCE_EXTRA_MEDIA = {
+    'js': [
+        'posts/js/tinymce-upload-image.js'
     ],
 }
 

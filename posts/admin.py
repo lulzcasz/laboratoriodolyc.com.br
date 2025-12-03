@@ -16,6 +16,7 @@ class CategoryAdmin(TreeAdmin):
 
 
 class PostChildAdmin(PolymorphicChildModelAdmin):
+    change_form_template = 'admin/posts/post/change_form.html'
     base_model = Post
     show_in_index = False
     
@@ -30,6 +31,7 @@ class PostChildAdmin(PolymorphicChildModelAdmin):
     readonly_fields = ['uuid', 'created_at', 'updated_at', 'published_at']
 
     filter_horizontal = ('categories',)
+    
 
 @admin.register(Tutorial)
 class TutorialAdmin(PostChildAdmin):

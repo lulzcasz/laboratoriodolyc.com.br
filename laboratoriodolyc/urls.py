@@ -23,6 +23,7 @@ urlpatterns = [
         {'sitemaps': sitemaps_dict},
         name='django.contrib.sitemaps.views.sitemap'
     ),
+    path('', include('posts.urls')),
     path('', include('blog.urls')),
 ]
 
