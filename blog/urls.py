@@ -5,16 +5,16 @@ urlpatterns = [
     path('', index, name="index"),
     re_path(r'^(?P<post_type>artigos|noticias|tutoriais)/$',
         posts_by_type, 
-        name='post-detail'
+        name='posts-by-type',
     ),
     re_path(r'^(?P<post_type>artigos|noticias|tutoriais)/(?P<post_slug>[\w-]+)/$',
         post_detail, 
-        name='post-detail'
+        name='post-detail',
     ),
     path('posts/', posts, name="posts"),
     path(
         '<path:category_full_path>/',
         posts_by_category,
-        name="posts-by-category"
+        name="posts-by-category",
     ),
 ]
