@@ -1,12 +1,19 @@
-from django.urls import path
-from blog.views import index, post_list, post_detail, posts_by_category
+from django.urls import path, re_path
+from blog.views import index, posts, post_detail, posts_by_category, posts_by_type
 
 urlpatterns = [
     path('', index, name="index"),
-    path('todos-os-posts/', post_list, name="post-list"),
-    path('<slug:post_slug>/', post_detail, name="post-detail"),
+    re_path(r'^(?P<post_type>artigos|noticias|tutoriais)/$',
+        posts_by_type, 
+        name='post-detail'
+    ),
+    re_path(r'^(?P<post_type>artigos|noticias|tutoriais)/(?P<post_slug>[\w-]+)/$',
+        post_detail, 
+        name='post-detail'
+    ),
+    path('posts/', posts, name="posts"),
     path(
-        'categorias/<path:category_full_path>/',
+        '<path:category_full_path>/',
         posts_by_category,
         name="posts-by-category"
     ),

@@ -7,7 +7,7 @@
 {% for children in childrens %}
     {% if children.children %}
         <li>
-            <a class="dropdown-item has-submenu dropdown-toggle" href="/categorias/{{ children.data.full_path }}/">
+            <a class="dropdown-item has-submenu dropdown-toggle" href="/{{ children.data.full_path }}/">
                 {{ children.data.name }}
             </a>
             <ul class="dropdown-menu dropdown-submenu">
@@ -16,7 +16,7 @@
         </li>
     {% else %}
         <li>
-            <a class="dropdown-item" href="/categorias/{{ children.data.full_path }}/">
+            <a class="dropdown-item" href="/{{ children.data.full_path }}/">
                 {{ children.data.name }}
             </a>
         </li>

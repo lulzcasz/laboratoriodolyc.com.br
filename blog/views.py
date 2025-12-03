@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from posts.models import Category, Post
+from posts.models import Category, Post, Tutorial, Article, News
 from django.core.paginator import Paginator
 
 
@@ -13,7 +13,7 @@ def index(request):
     return render(request, 'blog/index.html', ctx)
 
 
-def post_list(request):
+def posts(request):
     all_posts = Post.objects.filter(status=Post.Status.PUBLISHED)
 
     paginator = Paginator(all_posts, 4)
@@ -25,15 +25,51 @@ def post_list(request):
     return render(request, 'blog/post_list.html', {'page_obj': page_obj})
 
 
-def post_detail(request, post_slug):
+def post_detail(request, post_type, post_slug):
+    model_mapping = {
+        'tutoriais': Tutorial,
+        'artigos': Article,
+        'noticias': News,
+    }
+
+    model_class = model_mapping.get(post_type)
+
     return render(
         request,
         'blog/post_detail.html',
-        {'post': get_object_or_404(Post, slug=post_slug, status=Post.Status.PUBLISHED)}
+        {'post': get_object_or_404(
+            model_class, slug=post_slug, status=Post.Status.PUBLISHED,
+        )}
     )
 
 
 def posts_by_category(request, category_full_path):
-    posts = Category.objects.get(full_path=category_full_path).posts
+    all_posts = Category.objects.get(full_path=category_full_path).posts.all()
 
-    return render(request, 'blog/posts_by_category.html', {'posts': posts})
+    paginator = Paginator(all_posts, 4)
+
+    page_number = request.GET.get('pagina')
+
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'blog/post_list.html', {'page_obj': page_obj})
+
+
+def posts_by_type(request, post_type):
+    model_mapping = {
+        'tutoriais': Tutorial,
+        'artigos': Article,
+        'noticias': News,
+    }
+
+    model_class = model_mapping.get(post_type)
+
+    all_posts = model_class.objects.filter(status=Post.Status.PUBLISHED)
+
+    paginator = Paginator(all_posts, 4)
+
+    page_number = request.GET.get('pagina')
+
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'blog/post_list.html', {'page_obj': page_obj})
