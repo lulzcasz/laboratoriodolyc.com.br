@@ -66,7 +66,12 @@ class Post(PolymorphicModel):
         
     uuid = UUIDField(default=uuid4, editable=False, unique=True, db_index=True)
     author = ForeignKey(
-        'auth.User', SET_NULL, verbose_name='autor', null=True, blank=True
+        'auth.User',
+        SET_NULL,
+        verbose_name='autor',
+        null=True,
+        blank=True,
+        related_name='posts',
     )
     title = CharField('título', max_length=60, unique=True)
     slug = SlugField(max_length=60, unique=True, blank=True)
@@ -119,7 +124,11 @@ class Post(PolymorphicModel):
 
 class Tutorial(Post):
     prerequisites = ManyToManyField(
-        'self', verbose_name='pré-requisitos', blank=True, symmetrical=False
+        'self',
+        verbose_name='pré-requisitos',
+        blank=True,
+        symmetrical=False,
+        related_name='tutorials',
     )
 
     class Meta:
