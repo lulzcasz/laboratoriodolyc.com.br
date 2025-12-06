@@ -4,6 +4,18 @@
     <title>{{ post.title }}</title>
 {% endblock title %}
 
+{% block meta_tags %}
+    <meta name="description" content="{{ post.description }}">
+    <meta name="keywords" content="{{ meta_keywords }}">
+    <link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ post.get_absolute_url }}">
+    <meta property="og:title" content="{{ post.title }}">
+    <meta property="og:description" content="{{ post.description }}">
+    <meta property="og:type" content="{{ post.verbose_name }}">
+    <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ post.get_absolute_url }}">
+    <meta property="og:image" content="{{ post.cover.url }}">
+    <meta property="og:site_name" content="Laboratório do Lyc">
+{% endblock meta_tags %}
+
 {% block main %}
     <main class="container flex-fill">
         <div class="row">

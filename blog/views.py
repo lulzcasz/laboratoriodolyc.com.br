@@ -34,12 +34,29 @@ def post_detail(request, post_type, post_slug):
 
     model_class = model_mapping.get(post_type)
 
+    post = get_object_or_404(model_class, slug=post_slug, status=Post.Status.PUBLISHED)
+
+    selected_cats = post.categories.all()
+    paths = set()
+    step = Category.steplen
+
+    for cat in selected_cats:
+        current_path = cat.path
+        for i in range(step, len(current_path) + 1, step):
+            paths.add(current_path[:i])
+
+    all_cats_queryset = Category.objects.filter(path__in=paths)
+
+    meta_keywords = ", ".join(all_cats_queryset.values_list('name', flat=True))
+
     return render(
         request,
         'blog/post_detail.html',
-        {'post': get_object_or_404(
-            model_class, slug=post_slug, status=Post.Status.PUBLISHED,
-        )}
+        {
+            'post': post,
+            'all_cats': all_cats_queryset, 
+            'meta_keywords': meta_keywords 
+        }
     )
 
 
