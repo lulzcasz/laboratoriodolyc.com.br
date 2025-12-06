@@ -19,7 +19,7 @@ def process_image(self, image_name, kind):
                 '-i',
                 image_url,
                 '-vf',
-                "scale=1024:576",
+                "scale=1280:720",
                 '-pix_fmt',
                 'yuva420p',
                 '-c:v', 
