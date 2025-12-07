@@ -13,6 +13,8 @@ from django.db.models import (
     TextChoices,
     URLField,
     UUIDField,
+    Count,
+    Q,
 )
 from django.urls import reverse
 from django.utils import timezone
@@ -105,6 +107,28 @@ class Post(PolymorphicModel):
                 self._cover_changed = True
 
         super().save(*args, **kwargs)
+
+    def get_related_posts(self):
+        if not self.categories.exists():
+            return Post.objects.none()
+
+        return (
+            Post.objects.filter(
+                status=self.Status.PUBLISHED,
+                categories__in=self.categories.all(),
+            )
+            .exclude(
+                pk=self.pk,
+            )
+            .annotate(
+                shared_category_count=Count(
+                    "categories",
+                    filter=Q(categories__in=self.categories.all()),
+                )
+            )
+            .order_by("-shared_category_count")
+            [:3]
+        )
 
     def __str__(self):
         return self.title

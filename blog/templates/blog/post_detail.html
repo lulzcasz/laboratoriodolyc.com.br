@@ -48,20 +48,54 @@
                 </div>
             </div>
             <div class="col-xl-3 mt-3" style="position: sticky; top: 1rem; height: fit-content;">
-                <div class="pb-2">
-                    {% if post.section %}
-                        <a href="{% url 'posts-by-section' section_slug=post.section.slug %}">
-                            <div class="btn btn-primary w-100">
-                                {{ post.section.name }}
-                            </div>
-                        </a>
+                <div>
+                    {% if post.get_related_posts %}
+                        <h3 class="text-center">Posts relacionados</h3>
+                        <hr class="pb-2">
+                        {% for related_post in post.get_related_posts %}
+                            <a href="{% url 'post-detail' post_slug=related_post.slug %}" class="text-decoration-none text-reset">
+                                <div class="card border-0 rounded-4 pb-3">
+                                    <div style="position: relative;"> 
+                                        <img 
+                                            src="{{ related_post.cover.url }}" 
+                                            class="card-img-top rounded-top-4" 
+                                            alt="{{ related_post.title }}"
+                                            style="aspect-ratio: 191/100; object-fit: cover;"
+                                        >
+                                        <span class="badge bg-primary rounded-4" style="
+                                            position: absolute; 
+                                            top: 10px; 
+                                            left: 10px; 
+                                            font-size: 0.85em;
+                                            z-index: 10;
+                                        ">
+                                            {{ related_post.verbose_name|title }} 
+                                        </span>
+                                    </div>
+                                    <div class="card-body bg-body-tertiary rounded-bottom-4">
+                                        <h5 class="card-title">{{ related_post.title }}</h5>
+                                    </div>
+                                </div>
+                            </a>
+                        {% endfor %}
                     {% endif %}
                 </div>
-                {% for category in post.categories.all %}
-                    <a href="{% url 'posts-by-category' category_full_path=category.full_path %}" class="btn btn-sm btn-outline-secondary">
-                        {{ category.name }}
-                    </a>
-                {% endfor %}
+                <div class="pb-3">
+                    <h3 class="text-center">Descobrir mais</h3>
+                    <hr class="pb-2">
+                    <div class="d-flex justify-content-center flex-wrap gap-2">
+                        <a href="{% url 'posts-by-type' post_type=post.verbose_name_plural|slugify %}" 
+                        class="btn btn-sm btn-dark rounded-pill px-3">
+                            {{ post.verbose_name_plural|title }}
+                        </a>
+                        {% for category in post.categories.all %}
+                            <a href="{% url 'posts-by-category' category_full_path=category.full_path %}" 
+                            class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                                {{ category.name }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
         </div>
     </main>
