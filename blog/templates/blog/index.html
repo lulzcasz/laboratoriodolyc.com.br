@@ -17,19 +17,11 @@
                 src="{{ posts.0.cover.url }}" 
                 class="card-img-top rounded-top-4" 
                 alt="{{ posts.0.title }}"
-                style="aspect-ratio: 16/9; object-fit: cover;"
+                style="aspect-ratio: 191/100; object-fit: cover;"
               >
               <div class="card-body">
                 <h5 class="card-title">{{ posts.0.title }}</h5>
                 <p class="card-text">{{ posts.0.description }}</p>
-                <p class="card-text d-flex align-items-center justify-content-between">
-                  <span class="bg-secondary text-white rounded px-2 me-2">
-                    {{ posts.0.verbose_name }}
-                  </span>
-                  <small class="text-body-secondary">
-                    {{ posts.0.published_at | date }}
-                  </small>
-                </p>
               </div>
             </div>
           </a>
@@ -45,21 +37,13 @@
                       src="{{ post.cover.url }}" 
                       class="img-fluid rounded-start-4" 
                       alt="{{ post.title }}"
-                      style="aspect-ratio: 16/9; object-fit: cover;"
+                      style="aspect-ratio: 191/100; object-fit: cover;"
                     >
                   </div>
                   <div class="col-lg-7">
                     <div class="card-body">
                       <h5 class="card-title">{{ post.title }}</h5>
                       <p class="card-text">{{ post.description }}</p>
-                      <p class="card-text d-flex align-items-center justify-content-between">
-                        <span class="bg-secondary text-white rounded px-2 me-2">
-                          {{ post.verbose_name }}
-                        </span>
-                        <small class="text-body-secondary">
-                          {{ post.published_at | date }}
-                        </small>
-                      </p>
                     </div>
                   </div>
                 </div>
