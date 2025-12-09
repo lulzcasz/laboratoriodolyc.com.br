@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     'tinymce',
     'treebeard',
     'posts',
+    'products',
     'blog',
 ]
 

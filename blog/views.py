@@ -35,6 +35,7 @@ def posts(request):
 
 def post_detail(request, post_slug):
     post = get_object_or_404(Post, slug=post_slug, status=Post.Status.PUBLISHED)
+    products = post.products.all()
 
     selected_cats = post.categories.all()
     paths = set()
@@ -52,7 +53,12 @@ def post_detail(request, post_slug):
     return render(
         request,
         "blog/post_detail.html",
-        {"post": post, "all_cats": all_cats_queryset, "meta_keywords": meta_keywords},
+        {
+            "post": post,
+            "all_cats": all_cats_queryset,
+            "meta_keywords": meta_keywords,
+            "products": products,
+        },
     )
 
 

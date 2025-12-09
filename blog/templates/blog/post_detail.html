@@ -33,7 +33,7 @@
         <div class="row">
             <div class="col-xl-9 bg-body-tertiary">
                 <h1 class="pb-2 pt-2">{{ post.title }}</h1>
-                <p style="text-align: justify;">{{ post.description }}</p>
+                <p>{{ post.description }}</p>
                 <h6 class="pb-2">{{ post.created_at | date }}</h6>
                 <div class="pb-3">
                     <img
@@ -48,6 +48,49 @@
                 </div>
             </div>
             <div class="col-xl-3 mt-3" style="position: sticky; top: 1rem; height: fit-content;">
+                {% if products %}
+                    <div class="row">
+                        <div id="product-carousel">
+                            {% for product in products %}
+                                <div class="mb-2 border border-2 border-light carousel-item fade-transition" style="display: none;">
+                                    <div class="card border-0 rounded-0 d-flex flex-row overflow-hidden h-100">
+                                        
+                                        <div class="flex-grow-1 position-relative">
+                                            <img class="product-main-img img-fluid w-100 h-100" 
+                                                src="{{ product.image.url }}" 
+                                                alt="Product Image" 
+                                                style="object-fit: cover; min-height: 150px;">
+                                        </div>
+                                        
+                                        <div class="bg-light p-2 d-flex flex-column align-items-center justify-content-center gap-1 flex-shrink-0" 
+                                            style="min-width: 30px;">
+                                            {% for product_link in product.links.all %}
+                                                <a rel="sponsored nofollow" href="{{ product_link.url }}" target="_blank" class="opacity-100 transition">
+                                                    <img src="{{ product_link.platform.logo.url }}" 
+                                                        alt="Marketplace" 
+                                                        style="width: 30px; height: auto; object-fit: contain;">
+                                                </a>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="d-flex align-items-center justify-content-between px-3 mt-2 mb-3">
+                            
+                            <button id="prev-btn" class="carousel-nav-btn">
+                                &#10094; </button>
+
+                            <div id="carousel-pips" class="d-flex justify-content-center gap-2">
+                                </div>
+                            
+                            <button id="next-btn" class="carousel-nav-btn">
+                                &#10095; </button>
+
+                        </div>
+                    </div>
+                {% endif %}
                 <div>
                     {% if post.get_related_posts %}
                         <h3 class="text-center">Posts relacionados</h3>

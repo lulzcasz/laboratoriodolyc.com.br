@@ -89,6 +89,12 @@ class Post(PolymorphicModel):
     categories = ManyToManyField(
         Category, verbose_name="categorias", related_name="posts", blank=True
     )
+    products = ManyToManyField(
+        'products.Product',
+        verbose_name="produtos",
+        related_name="posts",
+        blank=True,
+    )
 
     def save(self, *args, **kwargs):
         if not self.slug:
