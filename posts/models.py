@@ -39,7 +39,7 @@ class Post(PolymorphicModel):
     )
     title = CharField("título", max_length=60, unique=True)
     slug = SlugField(max_length=60, unique=True, blank=True)
-    description = CharField("descrição", max_length=160, blank=True)
+    description = CharField("descrição", max_length=145, blank=True)
     cover = ImageField("capa", upload_to=post_image_path, blank=True)
     video = URLField("vídeo", blank=True)
     content = HTMLField("conteúdo", blank=True)
