@@ -48,3 +48,8 @@ get-prism:
     @curl --create-dirs -o laboratoriodolyc/static/css/prism-command-line.min.css https://cdn.jsdelivr.net/npm/prismjs@1.30/plugins/command-line/prism-command-line.min.css
     @curl --create-dirs -o laboratoriodolyc/static/js/prism-diff-highlight.min.js https://cdn.jsdelivr.net/npm/prismjs@1.30/plugins/diff-highlight/prism-diff-highlight.min.js
     @curl --create-dirs -o laboratoriodolyc/static/css/prism-diff-highlight.min.css https://cdn.jsdelivr.net/npm/prismjs@1.30/plugins/diff-highlight/prism-diff-highlight.min.css
+
+get-font-awesome:
+    @curl --create-dirs -o laboratoriodolyc/static/css/all.min.css https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1/css/all.min.css
+    @curl --create-dirs -o laboratoriodolyc/static/webfonts/fa-solid-900.woff2 https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1/webfonts/fa-solid-900.woff2
+    @curl --create-dirs -o laboratoriodolyc/static/webfonts/fa-brands-400.woff2 https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/webfonts/fa-brands-400.woff2

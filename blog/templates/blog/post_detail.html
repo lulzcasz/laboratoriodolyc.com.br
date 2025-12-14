@@ -1,6 +1,7 @@
 {% extends 'blog/base.html' %}
 
 {% load image_utils %}
+{% load static %}
 
 {% block title %}
     <title>{{ post.title }}</title>
@@ -104,6 +105,14 @@
 
                         </div>
                     </div>
+                {% endif %}
+                {% if post.repository %}
+                <div class="pb-2">
+                    <button class="btn btn-lg w-100 d-flex justify-content-center align-items-center gap-1" style="background-color: #24292e; color: #ffffff;">
+                    <i class="fs-3 fa-brands fa-github"></i>
+                        Ver Código Fonte
+                    </button>
+                </div>
                 {% endif %}
                 <div>
                     {% if post.get_related_posts %}

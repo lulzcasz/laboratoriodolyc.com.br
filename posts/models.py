@@ -117,6 +117,7 @@ class Tutorial(Post):
         ADVANCED = "advanced", "Avançado"
 
     difficulty = CharField("dificuldade", max_length=15, choices=Difficulty.choices)
+    repository = URLField("repositório", blank=True)
 
     class Meta:
         verbose_name_plural = "tutoriais"
