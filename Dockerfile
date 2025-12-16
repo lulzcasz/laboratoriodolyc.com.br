@@ -25,6 +25,7 @@ WORKDIR /app
 COPY . .
 
 RUN uv sync --no-dev
+RUN uv run manage.py collectstatic --no-input
 
 CMD ["uv", "run", "--no-dev", "gunicorn", "laboratoriodolyc.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "5"]
 
