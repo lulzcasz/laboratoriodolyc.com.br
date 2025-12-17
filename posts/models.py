@@ -1,7 +1,6 @@
 from uuid import uuid4
 from django.db.models import (
     SET_NULL,
-    BooleanField,
     CharField,
     DateTimeField,
     ForeignKey,
@@ -14,6 +13,7 @@ from django.db.models import (
     Count,
     Q,
 )
+from django.contrib.postgres.fields import ArrayField
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.text import slugify
@@ -47,7 +47,7 @@ class Post(PolymorphicModel):
     updated_at = DateTimeField("atualizado em", auto_now=True)
     published_at = DateTimeField("publicado em", null=True, editable=False)
     status = CharField(max_length=10, choices=Status.choices, default=Status.DRAFT)
-    tags = TaggableManager()
+    tags = TaggableManager(blank=True)
     products = ManyToManyField(
         'products.Product',
         verbose_name="produtos",
@@ -117,22 +117,26 @@ class Tutorial(Post):
         ADVANCED = "advanced", "Avançado"
 
     difficulty = CharField("dificuldade", max_length=15, choices=Difficulty.choices)
-    repository = URLField("repositório", blank=True)
+    source_code = URLField("código fonte", blank=True)
 
     class Meta:
         verbose_name_plural = "tutoriais"
 
 
 class Article(Post):
-    is_review = BooleanField("é review", default=False)
-    is_opinion = BooleanField("é opinião", default=False)
+    class Genre(TextChoices):
+        REVIEW = "review", "Review"
+        OPINION = "opinion", "Opinião"
+
+    genres = ArrayField(
+        CharField(max_length=10, choices=Genre.choices),
+        verbose_name="gêneros",
+        blank=True,
+        default=list,
+    )
+
+    def get_genres_labels(self):
+        return [self.Genre(genre).label for genre in self.genres]
 
     class Meta:
         verbose_name = "artigo"
-
-
-class News(Post):
-    is_breaking = BooleanField("é urgente", default=False)
-
-    class Meta:
-        verbose_name = "notícia"

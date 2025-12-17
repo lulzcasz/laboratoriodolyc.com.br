@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404, render
-from posts.models import Article, News, Post, Tutorial
+from posts.models import Article, Post, Tutorial
 from taggit.models import Tag
 
 
@@ -60,7 +60,6 @@ def posts_by_type(request, post_type):
     model_mapping = {
         "tutoriais": Tutorial,
         "artigos": Article,
-        "noticias": News,
     }
 
     model_class = model_mapping.get(post_type)

@@ -31,7 +31,7 @@ class PostTypeSitemap(Sitemap):
     changefreq = 'daily'
 
     def items(self):
-        return ['artigos', 'noticias', 'tutoriais']
+        return ['artigos', 'tutoriais']
 
     def location(self, item):
         return reverse('posts-by-type', args=[item])

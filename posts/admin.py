@@ -1,8 +1,21 @@
+from django import forms
 from django.contrib import admin
-from posts.models import Post, Tutorial, Article, News
+from posts.models import Post, Tutorial, Article
 from polymorphic.admin import (
     PolymorphicParentModelAdmin, PolymorphicChildModelAdmin, PolymorphicChildModelFilter
 )
+
+class ArticleAdminForm(forms.ModelForm):
+    genres = forms.MultipleChoiceField(
+        choices=Article.Genre.choices,
+        widget=forms.CheckboxSelectMultiple,
+        required=False,
+        label="Gêneros"
+    )
+
+    class Meta:
+        model = Article
+        fields = '__all__'
 
 
 class PostChildAdmin(PolymorphicChildModelAdmin):
@@ -14,37 +27,38 @@ class PostChildAdmin(PolymorphicChildModelAdmin):
         return False
 
     search_fields = ['title', 'description']
+    filter_horizontal = ('products',) 
     list_display = ['title', 'status', 'created_at', 'updated_at', 'published_at',]
-    
     prepopulated_fields = {"slug": ("title",)}
-    
     readonly_fields = ['uuid', 'created_at', 'updated_at', 'published_at']
     
 
 @admin.register(Tutorial)
 class TutorialAdmin(PostChildAdmin):
     base_model = Tutorial
-
-    filter_horizontal = PostChildAdmin.filter_horizontal
+    filter_horizontal = PostChildAdmin.filter_horizontal 
 
 
 @admin.register(Article)
 class ArticleAdmin(PostChildAdmin):
     base_model = Article
+    form = ArticleAdminForm
 
+    filter_horizontal = PostChildAdmin.filter_horizontal
 
-@admin.register(News)
-class NewsAdmin(PostChildAdmin):
-    base_model = News
+    def get_list_display(self, request):
+        return super().get_list_display(request) + ['get_genres_display']
+
+    def get_genres_display(self, obj):
+        return ", ".join([dict(Article.Genre.choices).get(g, g) for g in obj.genres])
+    get_genres_display.short_description = "Gêneros"
 
 
 @admin.register(Post)
 class PostParentAdmin(PolymorphicParentModelAdmin):
     base_model = Post
-    child_models = (Tutorial, Article, News)
+    child_models = (Tutorial, Article)
     
     list_display = ['title', 'status', 'polymorphic_ctype', 'created_at']
-    
     list_filter = (PolymorphicChildModelFilter, 'status', 'created_at')
-    
     search_fields = ['title', 'description']
