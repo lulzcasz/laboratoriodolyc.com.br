@@ -2,6 +2,7 @@
 
 {% load image_utils %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}
   <title>{{ post.title }}</title>
@@ -57,13 +58,12 @@
               class="btn btn-lg w-100 d-flex justify-content-center align-items-center gap-1 text-decoration-none" 
               style="background-color: #24292e; color: #ffffff; border: none;">
               <i class="fs-3 fa-brands fa-github-alt"></i>
-              Ver Código Fonte
+              {% trans 'Código Fonte' %}
             </a>
           </div>
         {% endif %}
         <div>
           {% if post.get_related_posts %}
-            <h3 class="text-center">Posts relacionados</h3>
             <hr class="pb-2">
             {% for related_post in post.get_related_posts %}
               <a href="{% url 'post-detail' post_slug=related_post.slug %}" class="text-decoration-none text-reset">
@@ -103,7 +103,6 @@
           {% endif %}
         </div>
         <div class="pb-3">
-          <h3 class="text-center">Descobrir mais</h3>
           <hr class="pb-2">
           <div class="d-flex justify-content-center flex-wrap gap-2">
             <a href="{% url 'posts-by-type' post_type=post.verbose_name_plural|slugify %}" 

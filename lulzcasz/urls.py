@@ -16,6 +16,7 @@ sitemaps = {
 
 
 urlpatterns = [
+    path('i18n/', include('django.conf.urls.i18n')),
     path('django-admin/', admin.site.urls),
     path("robots.txt", TemplateView.as_view(
         template_name="robots.txt", content_type="text/plain"
@@ -27,7 +28,7 @@ urlpatterns = [
 
 urlpatterns += i18n_patterns(
     path('', include('blog.urls')),
-    prefix_default_language=False 
+    prefix_default_language=False,
 )
 
 if settings.DEBUG:

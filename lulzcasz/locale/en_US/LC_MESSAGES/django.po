@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-27 18:44-0600\n"
+"POT-Creation-Date: 2025-12-28 09:05-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,26 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: blog/templates/blog/base.html:17
+msgid "Todos os direitos reservados."
+msgstr "All rights reserved"
+
+#: blog/templates/blog/index.html:77
+msgid "Todos os Posts"
+msgstr "All Posts"
+
+#: blog/templates/blog/post_detail.html:61
+msgid "Código Fonte"
+msgstr "Source Code"
+
+#: blog/urls.py:11
+msgid "todos-os-posts/"
+msgstr "all-posts/"
+
+#: blog/urls.py:13
+msgid "marcadores/<slug:tag_slug>/"
+msgstr "tags/<slug:tag_slug>/"
 
 #: posts/models.py:108
 msgid "Iniciante"
@@ -44,3 +64,12 @@ msgstr "article"
 #: posts/models.py:133
 msgid "artigos"
 msgstr "articles"
+
+#~ msgid "articles/"
+#~ msgstr "artigos/"
+
+#~ msgid "tutorials/"
+#~ msgstr "tutoriais/"
+
+#~ msgid "marcadores"
+#~ msgstr "tags"

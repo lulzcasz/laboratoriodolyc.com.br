@@ -2,6 +2,7 @@
 
 {% load image_utils %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}
   <title>lulzcasz</title>
@@ -73,7 +74,7 @@
             </a>
           {% endfor %}
           <div class="d-flex justify-content-center">
-            <a href="{% url 'posts' %}" style="width: 100%;" type="button" class="btn btn-primary rounded-2">Ver Todos os Posts</a>
+            <a href="{% url 'posts' %}" style="width: 100%;" type="button" class="btn btn-primary rounded-2">{% trans 'Todos os Posts' %}</a>
           </div>
         </div>
       </div>
