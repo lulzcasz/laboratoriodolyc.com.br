@@ -11,6 +11,7 @@ from django.db.models import (
     UUIDField,
     Count,
     Q,
+    BooleanField,
 )
 from django.contrib.postgres.fields import ArrayField
 from django.urls import reverse
@@ -29,14 +30,6 @@ class Post(PolymorphicModel):
         PUBLISHED = "published", "Publicado"
 
     uuid = UUIDField(default=uuid4, editable=False, unique=True, db_index=True)
-    author = ForeignKey(
-        "auth.User",
-        SET_NULL,
-        null=True,
-        blank=True,
-        related_name="posts",
-        verbose_name="autor",
-    )
     title = CharField("título", max_length=60, unique=True)
     slug = SlugField(max_length=60, unique=True, blank=True)
     description = CharField("descrição", max_length=145, blank=True)
@@ -47,6 +40,7 @@ class Post(PolymorphicModel):
     published_at = DateTimeField("publicado em", null=True, editable=False)
     status = CharField(max_length=10, choices=Status.choices, default=Status.DRAFT)
     tags = TaggableManager("marcadores", blank=True)
+    is_featured = BooleanField(default=False, verbose_name=_("é destaque"))
 
     def save(self, *args, **kwargs):
         if not self.slug:

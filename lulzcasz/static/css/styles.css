@@ -20,7 +20,62 @@ pre > code.diff-highlight .token.inserted:not(.prefix) {
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'CascadiaCode';
+  src: url('../fonts/CascadiaCode.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .navbar-brand {
     font-family: 'DeliusUnicase' !important;
     font-weight: bold;
+}
+
+.card {
+  background-color: #1E1E1E !important;
+}
+
+.text-brand-purple { color: var(--bs-brand-purple) !important; }
+.bg-brand-purple { background-color: var(--bs-brand-purple) !important; }
+.btn-brand-purple {
+  background-color: var(--bs-brand-purple);
+  color: white;
+  border: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #F4F4F0;
+}
+
+p {
+  color: #C7C7C0;
+}
+
+code[class*=language-],
+pre[class*=language-] {
+	color: #fff;
+	font-family: 'CascadiaCode';
+}
+
+pre[class*=language-] {
+	border-left: 10px solid #D4AF37;
+	background-color: #1E1E1E;
+  box-shadow: none !important;
+}
+
+.token.entity,
+.token.operator,
+.token.url,
+.token.variable {
+	background: none !important;
+}
+
+.badge {
+  background-color: #121212;
 }

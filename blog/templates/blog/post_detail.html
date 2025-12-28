@@ -35,7 +35,7 @@
 {% block main %}
   <main class="container flex-fill">
     <div class="row">
-      <div class="col-xl-9 bg-body-tertiary">
+      <div class="col-xl-9">
         <h1 class="pb-2 pt-2">{{ post.title }}</h1>
         <p>{{ post.description }}</p>
         <h6 class="pb-2">{{ post.created_at | date }}</h6>
@@ -56,18 +56,19 @@
           <div class="pb-2">
             <a target="_blank" href="{{ post.source_code }}" 
               class="btn btn-lg w-100 d-flex justify-content-center align-items-center gap-1 text-decoration-none" 
-              style="background-color: #24292e; color: #ffffff; border: none;">
+              style="background-color: #151516; color: #E7E7E7; border: none;">
               <i class="fs-3 fa-brands fa-github-alt"></i>
               {% trans 'Código Fonte' %}
             </a>
           </div>
+          <hr class="pb-2">
         {% endif %}
         <div>
           {% if post.get_related_posts %}
-            <hr class="pb-2">
             {% for related_post in post.get_related_posts %}
+            <div class="pb-3">
               <a href="{% url 'post-detail' post_slug=related_post.slug %}" class="text-decoration-none text-reset">
-                <div class="card border-0 rounded-4 pb-3">
+                <div class="card border-0 rounded-4">
                   <div style="position: relative;"> 
                     <img 
                       src="{{ related_post.cover|variant:'small' }}" 
@@ -75,30 +76,22 @@
                       alt="{{ related_post.title }}"
                       style="aspect-ratio: 191/100; object-fit: cover;"
                     >
-                    <span class="badge bg-primary rounded-4" style="
+                    <span class="badge rounded-3" style="
                       position: absolute; 
                       top: 10px; 
                       left: 10px; 
-                      font-size: 0.85em;
-                      z-index: 10;
-                    ">
-                      {{ related_post.verbose_name|title }} 
-                    </span>
-                    <span class="badge bg-primary rounded-4" style="
-                      position: absolute; 
-                      top: 10px; 
-                      left: 10px; 
-                      font-size: 0.85em;
+                      font-size: 0.75em;
                       z-index: 10;
                     ">
                       {{ related_post.verbose_name|title }} 
                     </span>
                   </div>
-                  <div class="card-body bg-body-tertiary rounded-bottom-4">
+                  <div class="card-body bg-body-tertiary rounded-bottom-4" style="background-color: #1E1E1E !important;">
                     <h5 class="card-title">{{ related_post.title }}</h5>
                   </div>
                 </div>
               </a>
+            </div>
             {% endfor %}
           {% endif %}
         </div>

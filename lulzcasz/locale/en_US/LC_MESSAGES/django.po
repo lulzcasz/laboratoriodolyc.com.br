@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-28 09:05-0600\n"
+"POT-Creation-Date: 2025-12-28 14:15-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,55 +21,46 @@ msgstr ""
 msgid "Todos os direitos reservados."
 msgstr "All rights reserved"
 
-#: blog/templates/blog/index.html:77
-msgid "Todos os Posts"
-msgstr "All Posts"
-
 #: blog/templates/blog/post_detail.html:61
 msgid "Código Fonte"
 msgstr "Source Code"
 
 #: blog/urls.py:11
 msgid "todos-os-posts/"
-msgstr "all-posts/"
+msgstr "all-posts"
 
 #: blog/urls.py:13
 msgid "marcadores/<slug:tag_slug>/"
 msgstr "tags/<slug:tag_slug>/"
 
-#: posts/models.py:108
+#: posts/models.py:43
+msgid "é destaque"
+msgstr "is featured"
+
+#: posts/models.py:102
 msgid "Iniciante"
 msgstr "Beginner"
 
-#: posts/models.py:109
+#: posts/models.py:103
 msgid "Intermediário"
 msgstr "Intermediate"
 
-#: posts/models.py:110
+#: posts/models.py:104
 msgid "Avançado"
 msgstr "Advanced"
 
-#: posts/models.py:116
+#: posts/models.py:110
 msgid "tutoriais"
 msgstr "tutorials"
 
-#: posts/models.py:122
+#: posts/models.py:116
 msgid "Opinião"
 msgstr "Opinion"
 
-#: posts/models.py:132
+#: posts/models.py:126
 msgid "artigo"
 msgstr "article"
 
-#: posts/models.py:133
+#: posts/models.py:127
 msgid "artigos"
 msgstr "articles"
-
-#~ msgid "articles/"
-#~ msgstr "artigos/"
-
-#~ msgid "tutorials/"
-#~ msgstr "tutoriais/"
-
-#~ msgid "marcadores"
-#~ msgstr "tags"

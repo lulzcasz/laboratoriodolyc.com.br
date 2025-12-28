@@ -5,13 +5,16 @@ from taggit.models import Tag
 
 
 def index(request):
-    posts = Post.objects.filter(status=Post.Status.PUBLISHED).order_by("-published_at")[
-        :3
-    ]
+    last_posts = Post.objects.filter(
+        status=Post.Status.PUBLISHED
+    ).order_by("-published_at")[:3]
 
-    ctx = {
-        "posts": posts,
-    }
+    featured_posts = Post.objects.filter(
+        status=Post.Status.PUBLISHED, 
+        is_featured=True
+    )[:3]
+
+    ctx = {"featured_posts": featured_posts, "last_posts": last_posts}
 
     return render(request, "blog/index.html", ctx)
 

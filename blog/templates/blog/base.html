@@ -6,13 +6,13 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-  <body class="d-flex flex-column min-vh-100">
+  <body style="background-color: #121212" class="d-flex flex-column min-vh-100" data-bs-theme="dark">
     <header>
       {% include 'blog/includes/_navbar.html' %}
     </header>
     {% block main %}{% endblock %}
-    <footer>
-      <div class="p-5 bg-dark text-white">
+    <footer style="background-color: #1E1E1E;">
+      <div class="p-5 text-white">
         <div class="container py-5 text-center">   
           <p>lulzcasz © 2025 {% trans 'Todos os direitos reservados.' %}</p>
         </div>

@@ -59,6 +59,6 @@ class PostParentAdmin(PolymorphicParentModelAdmin):
     base_model = Post
     child_models = (Tutorial, Article)
     
-    list_display = ['title', 'status', 'polymorphic_ctype', 'created_at']
+    list_display = ['title', 'status', 'is_featured', 'polymorphic_ctype', 'created_at']
     list_filter = (PolymorphicChildModelFilter, 'status', 'created_at')
     search_fields = ['title', 'description']
