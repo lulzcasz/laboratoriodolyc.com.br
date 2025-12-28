@@ -18,6 +18,8 @@ class StaticSitemap(Sitemap):
 class PostSitemap(Sitemap):
     changefreq = "daily"
     priority = 0.9
+    i18n = True
+    alternates = True
 
     def items(self):
         return Post.objects.filter(status=Post.Status.PUBLISHED)

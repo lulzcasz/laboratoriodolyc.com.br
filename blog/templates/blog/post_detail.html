@@ -30,6 +30,12 @@
   {% for tag in post.tags.all %}
     <meta property="article:tag" content="{{ tag.name }}" />
   {% endfor %}
+  {% language 'pt-br' %}
+    <link rel="alternate" hreflang="pt-br" href="{{ request.scheme }}://{{ request.get_host }}{% url 'post-detail' post.slug_pt_br %}" />
+  {% endlanguage %}
+  {% language 'en-us' %}
+    <link rel="alternate" hreflang="en-us" href="{{ request.scheme }}://{{ request.get_host }}{% url 'post-detail' post.slug_en_us %}" />
+  {% endlanguage %}
 {% endblock meta_tags %}
 
 {% block main %}
