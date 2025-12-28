@@ -28,8 +28,8 @@ INSTALLED_APPS = [
 gettext = lambda s: s
 
 LANGUAGES = [
-    ('en-us', _('English')),
-    ('pt-br', _('Portuguese')),
+    ('pt-br', 'Português (Brasileiro)'),
+    ('en-us', 'English (United States)'),
 ]
 
 TAGGIT_CASE_INSENSITIVE = True
@@ -135,7 +135,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'pt-br'
 
 USE_I18N = True
 USE_L10N = True

@@ -25,8 +25,8 @@ from django.utils.translation import gettext_lazy as _
 
 class Post(PolymorphicModel):
     class Status(TextChoices):
-        DRAFT = "draft", "Draft"
-        PUBLISHED = "published", "Published"
+        DRAFT = "draft", "Rascunho"
+        PUBLISHED = "published", "Publicado"
 
     uuid = UUIDField(default=uuid4, editable=False, unique=True, db_index=True)
     author = ForeignKey(
@@ -35,17 +35,18 @@ class Post(PolymorphicModel):
         null=True,
         blank=True,
         related_name="posts",
+        verbose_name="autor",
     )
-    title = CharField(max_length=60, unique=True)
+    title = CharField("título", max_length=60, unique=True)
     slug = SlugField(max_length=60, unique=True, blank=True)
-    description = CharField(max_length=145, blank=True)
-    cover = ImageField(upload_to=post_image_path, blank=True)
-    content = HTMLField(blank=True)
-    created_at = DateTimeField(auto_now_add=True)
-    updated_at = DateTimeField(auto_now=True)
-    published_at = DateTimeField(null=True, editable=False)
+    description = CharField("descrição", max_length=145, blank=True)
+    cover = ImageField("capa", upload_to=post_image_path, blank=True)
+    content = HTMLField("conteúdo", blank=True)
+    created_at = DateTimeField("criado em", auto_now_add=True)
+    updated_at = DateTimeField("atualizado em", auto_now=True)
+    published_at = DateTimeField("publicado em", null=True, editable=False)
     status = CharField(max_length=10, choices=Status.choices, default=Status.DRAFT)
-    tags = TaggableManager(blank=True)
+    tags = TaggableManager("marcadores", blank=True)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -104,22 +105,21 @@ class Post(PolymorphicModel):
 
 class Tutorial(Post):
     class Difficulty(TextChoices):
-        BEGINNER = "beginner", _("Beginner")
-        INTERMEDIATE = "intermediate", _("Intermediate")
-        ADVANCED = "advanced", _("Advanced")
+        BEGINNER = "beginner", _("Iniciante")
+        INTERMEDIATE = "intermediate", _("Intermediário")
+        ADVANCED = "advanced", _("Avançado")
 
-    difficulty = CharField(max_length=15, choices=Difficulty.choices)
-    source_code = URLField(blank=True)
+    difficulty = CharField("dificuldade", max_length=15, choices=Difficulty.choices)
+    source_code = URLField("código fonte", blank=True)
 
     class Meta:
-        verbose_name = _('tutorial')
-        verbose_name_plural = _('tutorials')
+        verbose_name_plural = _('tutoriais')
 
 
 class Article(Post):
     class Genre(TextChoices):
         REVIEW = "review", "Review"
-        OPINION = "opinion", _("Opinion")
+        OPINION = "opinion", _("Opinião")
 
     genres = ArrayField(
         CharField(max_length=10, choices=Genre.choices), blank=True, default=list,
@@ -129,5 +129,5 @@ class Article(Post):
         return [self.Genre(genre).label for genre in self.genres]
     
     class Meta:
-        verbose_name = _('article')
-        verbose_name_plural = _('articles')
+        verbose_name = _('artigo')
+        verbose_name_plural = _('artigos')
