@@ -27,6 +27,13 @@ pre > code.diff-highlight .token.inserted:not(.prefix) {
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Inter';
+  src: url('../fonts/Inter.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .navbar-brand {
     font-family: 'DeliusUnicase' !important;
     font-weight: bold;
@@ -55,6 +62,16 @@ h6 {
 
 p {
   color: #C7C7C0;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Inter';
 }
 
 code[class*=language-],
