@@ -24,6 +24,11 @@ WORKDIR /app
 
 COPY . .
 
+RUN apt-get update && apt-get install -y \
+    gettext \
+    locales \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 RUN uv sync --no-dev
 RUN uv tool install rust-just
 RUN just get-bootstrap get-prism get-font-awesome
