@@ -58,28 +58,33 @@ def posts_by_tag(request, tag_slug):
     )
 
 
-def posts_by_type(request, post_type):
-    model_mapping = {
-        "tutorials": Tutorial,
-        "tutoriais": Tutorial,
-        "articles": Article,
-        "artigos": Article,
-    }
-
-    model_class = model_mapping.get(post_type)
-
-    all_posts = model_class.objects.filter(status=Post.Status.PUBLISHED).order_by(
+def articles(request):
+    articles = Article.objects.filter(status=Post.Status.PUBLISHED).order_by(
         "-published_at"
     )
 
-    paginator = Paginator(all_posts, 4)
-
+    paginator = Paginator(articles, 4)
     page_number = request.GET.get("pagina")
-
     page_obj = paginator.get_page(page_number)
 
     return render(
         request,
         "blog/post_list.html",
-        {"page_obj": page_obj, "title": model_class._meta.verbose_name_plural.title()},
+        {"page_obj": page_obj, "title": Article._meta.verbose_name_plural.title()},
+    )
+
+
+def tutorials(request):
+    tutorials = Tutorial.objects.filter(status=Post.Status.PUBLISHED).order_by(
+        "-published_at"
+    )
+
+    paginator = Paginator(tutorials, 4)
+    page_number = request.GET.get("pagina")
+    page_obj = paginator.get_page(page_number)
+
+    return render(
+        request,
+        "blog/post_list.html",
+        {"page_obj": page_obj, "title": Tutorial._meta.verbose_name_plural.title()},
     )

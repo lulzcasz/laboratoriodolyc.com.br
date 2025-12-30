@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-28 14:15-0600\n"
+"POT-Creation-Date: 2025-12-30 09:22-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,15 +21,23 @@ msgstr ""
 msgid "Todos os direitos reservados."
 msgstr "All rights reserved"
 
-#: blog/templates/blog/post_detail.html:61
+#: blog/templates/blog/post_detail.html:67
 msgid "Código Fonte"
 msgstr "Source Code"
 
-#: blog/urls.py:11
-msgid "todos-os-posts/"
-msgstr "all-posts"
+#: blog/urls.py:7
+msgid "artigos/"
+msgstr "articles/"
 
-#: blog/urls.py:13
+#: blog/urls.py:8
+msgid "tutoriais/"
+msgstr "tutorials/"
+
+#: blog/urls.py:9
+msgid "todos-os-posts/"
+msgstr "all-posts/"
+
+#: blog/urls.py:11
 msgid "marcadores/<slug:tag_slug>/"
 msgstr "tags/<slug:tag_slug>/"
 

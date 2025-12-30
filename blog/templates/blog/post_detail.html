@@ -104,16 +104,14 @@
         <div class="pb-3">
           <hr class="pb-2">
           <div class="d-flex justify-content-center flex-wrap gap-2">
-            <a href="{% url 'posts-by-type' post_type=post.verbose_name_plural|slugify %}" 
-              class="btn btn-sm btn-dark rounded-pill px-3">
-              {{ post.verbose_name|title }}
+            {% if "tutorial" in post.verbose_name|lower %}
+                {% url 'tutorials' as type_url %}
+            {% else %}
+                {% url 'articles' as type_url %}
+            {% endif %}
+            <a href="{{ type_url }}" class="btn btn-sm btn-dark rounded-pill px-3">
+                {{ post.verbose_name|title }}
             </a>
-						{% for genre in post.get_genres_labels %}
-							<a href="{% url 'posts-by-type' post_type=post.verbose_name_plural|slugify %}" 
-								class="btn btn-sm btn-dark rounded-pill px-3">
-								{{ genre }}
-							</a>
-						{% endfor %}
             {% for tag in post.tags.all %}
               <a href="{% url 'posts-by-tag' tag_slug=tag.slug %}" 
                 class="btn btn-sm btn-outline-secondary rounded-pill px-3">

@@ -4,8 +4,13 @@ from django.urls import reverse
 
 
 class StaticSitemap(Sitemap):
+    priority = 1.0
+    changefreq = 'daily'
+    i18n = True
+    alternates = True
+
     def items(self):
-        return ['blog-index']
+        return ['home', 'all-posts', 'articles', 'tutorials']
 
     def location(self, item):
         if isinstance(item, tuple):
@@ -15,7 +20,7 @@ class StaticSitemap(Sitemap):
             return reverse(item)
 
 
-class PostSitemap(Sitemap):
+class PostDetailSitemap(Sitemap):
     changefreq = "daily"
     priority = 0.9
     i18n = True
@@ -26,14 +31,3 @@ class PostSitemap(Sitemap):
 
     def lastmod(self, obj):
         return obj.updated_at
-
-
-class PostTypeSitemap(Sitemap):
-    priority = 0.8
-    changefreq = 'daily'
-
-    def items(self):
-        return ['artigos', 'tutoriais']
-
-    def location(self, item):
-        return reverse('posts-by-type', args=[item])
