@@ -1,6 +1,6 @@
 [project]
 name = "lulzcasz"
-version = "0.16.1"
+version = "0.17.0"
 description = "lulzcasz.dev source code"
 readme = "README.md"
 requires-python = "~=3.12.0"
