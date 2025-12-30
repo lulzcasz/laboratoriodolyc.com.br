@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-30 09:22-0600\n"
+"POT-Creation-Date: 2025-12-30 10:03-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,6 +20,14 @@ msgstr ""
 #: blog/templates/blog/base.html:17
 msgid "Todos os direitos reservados."
 msgstr "All rights reserved"
+
+#: blog/templates/blog/index.html:12
+msgid ""
+"Programação Web e Eletrônica: tutoriais práticos e artigos detalhados. "
+"Compartilhando conhecimento sobre códigos e circuitos."
+msgstr ""
+"Web Development and Electronics: hands-on tutorials and in-depth articles. "
+"Sharing knowledge on code and circuits."
 
 #: blog/templates/blog/post_detail.html:67
 msgid "Código Fonte"

@@ -8,6 +8,10 @@
   <title>lulzcasz</title>
 {% endblock title %}
 
+{% block meta_tags %}
+  <meta name="description" content="{% trans 'Programação Web e Eletrônica: tutoriais práticos e artigos detalhados. Compartilhando conhecimento sobre códigos e circuitos.' %}">
+{% endblock meta_tags %}
+
 {% block main %}
   <main class="container-xxl flex-fill pt-3">
     {% if featured_posts %}
