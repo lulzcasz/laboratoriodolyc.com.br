@@ -20,7 +20,6 @@ class ArticleAdminForm(forms.ModelForm):
 
 
 class PostChildAdmin(TranslationAdmin, PolymorphicChildModelAdmin):
-    change_form_template = 'admin/posts/post/change_form.html'
     base_model = Post
     show_in_index = False
     

@@ -1,9 +1,7 @@
 from uuid import uuid4
 from django.db.models import (
-    SET_NULL,
     CharField,
     DateTimeField,
-    ForeignKey,
     ImageField,
     SlugField,
     TextChoices,

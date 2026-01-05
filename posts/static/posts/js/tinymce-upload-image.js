@@ -15,8 +15,7 @@ function upload_image(blobInfo, progress) {
         const xhr = new XMLHttpRequest();
         xhr.withCredentials = false;
 
-        const uuid = window.POST_OBJECT_UUID;
-        const url = `/tinymce/upload-image/${uuid}/`;
+        const url = `/tinymce/upload-image/`;
         xhr.open('POST', url);
 
         xhr.setRequestHeader('X-CSRFToken', getCookie('csrftoken'));

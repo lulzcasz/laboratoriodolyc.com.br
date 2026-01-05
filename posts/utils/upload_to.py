@@ -1,5 +1,4 @@
 from os.path import splitext
-from uuid import uuid4
 
 def post_image_path(instance, filename):
-    return f'posts/{instance.uuid}/{uuid4()}{splitext(filename)[1]}'
+    return f'posts/covers/{instance.uuid}/large.avif'
