@@ -44,7 +44,7 @@
       <div class="col-xl-9">
         <h1 class="pb-2 pt-2">{{ post.title }}</h1>
         <p>{{ post.description }}</p>
-        <h6 class="pb-2">{{ post.created_at | date }}</h6>
+        <p class="pb-2">{{ post.created_at | date }}</p>
         <div class="pb-3">
           <img
             class="img-fluid"
@@ -113,8 +113,7 @@
                 {{ post.verbose_name|title }}
             </a>
             {% for tag in post.tags.all %}
-              <a href="{% url 'posts-by-tag' tag_slug=tag.slug %}" 
-                class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+              <a href="{% url 'posts-by-tag' tag_slug=tag.slug %}" class="btn btn-sm btn-dark rounded-pill px-3">
                 {{ tag.name }}
               </a>
             {% endfor %}
